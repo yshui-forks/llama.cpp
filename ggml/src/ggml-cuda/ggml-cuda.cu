@@ -708,7 +708,7 @@ ggml_backend_buffer_type_t ggml_backend_cuda_buffer_type(int device) {
         for (int i = 0; i < ggml_backend_cuda_get_device_count(); i++) {
             ggml_backend_cuda_buffer_types[i] = {
                 /* .iface    = */ ggml_backend_cuda_buffer_type_interface,
-                /* .device   = */ ggml_backend_reg_dev_get(ggml_backend_cuda_reg(), i),
+                /* .device   = */ ggml_backend_reg_dev_get(GGML_BACKEND_REG(), i),
                 /* .context  = */ new ggml_backend_cuda_buffer_type_context{i, GGML_CUDA_NAME + std::to_string(i)},
             };
         }
@@ -1039,7 +1039,7 @@ ggml_backend_buffer_type_t ggml_backend_cuda_split_buffer_type(int main_device, 
 
     struct ggml_backend_buffer_type buft {
         /* .iface   = */ ggml_backend_cuda_split_buffer_type_interface,
-        /* .device  = */ ggml_backend_reg_dev_get(ggml_backend_cuda_reg(), main_device),
+        /* .device  = */ ggml_backend_reg_dev_get(GGML_BACKEND_REG(), main_device),
         /* .context = */ ctx,
     };
 
@@ -1102,7 +1102,7 @@ ggml_backend_buffer_type_t ggml_backend_cuda_host_buffer_type() {
             /* .get_alloc_size   = */ ggml_backend_cpu_buffer_type()->iface.get_alloc_size,
             /* .is_host          = */ ggml_backend_cpu_buffer_type()->iface.is_host,
         },
-        /* .device   = */ ggml_backend_reg_dev_get(ggml_backend_cuda_reg(), 0),
+        /* .device   = */ ggml_backend_reg_dev_get(GGML_BACKEND_REG(), 0),
         /* .context  = */ nullptr,
     };
 
@@ -3421,7 +3421,7 @@ static const ggml_backend_reg_i ggml_backend_cuda_reg_interface = {
 };
 
 // backend registry
-ggml_backend_reg_t ggml_backend_cuda_reg() {
+ggml_backend_reg_t GGML_BACKEND_REG() {
     static ggml_backend_reg reg;
     static bool initialized = false;
 
@@ -3477,7 +3477,7 @@ ggml_backend_t ggml_backend_cuda_init(int device) {
     ggml_backend_t cuda_backend = new ggml_backend {
         /* .guid      = */ ggml_backend_cuda_guid(),
         /* .interface = */ ggml_backend_cuda_interface,
-        /* .device    = */ ggml_backend_reg_dev_get(ggml_backend_cuda_reg(), device),
+        /* .device    = */ ggml_backend_reg_dev_get(GGML_BACKEND_REG(), device),
         /* .context   = */ ctx,
     };
 

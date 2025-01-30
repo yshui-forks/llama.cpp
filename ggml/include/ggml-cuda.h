@@ -10,12 +10,15 @@ extern "C" {
 #ifdef GGML_USE_HIP
 #define GGML_CUDA_NAME "ROCm"
 #define GGML_CUBLAS_NAME "hipBLAS"
+#define GGML_BACKEND_REG ggml_backend_hip_reg
 #elif defined(GGML_USE_MUSA)
 #define GGML_CUDA_NAME "MUSA"
 #define GGML_CUBLAS_NAME "muBLAS"
+#define GGML_BACKEND_REG ggml_backend_cuda_reg
 #else
 #define GGML_CUDA_NAME "CUDA"
 #define GGML_CUBLAS_NAME "cuBLAS"
+#define GGML_BACKEND_REG ggml_backend_cuda_reg
 #endif
 #define GGML_CUDA_MAX_DEVICES       16
 
@@ -40,7 +43,7 @@ GGML_BACKEND_API void ggml_backend_cuda_get_device_memory(int device, size_t * f
 GGML_BACKEND_API bool ggml_backend_cuda_register_host_buffer(void * buffer, size_t size);
 GGML_BACKEND_API void ggml_backend_cuda_unregister_host_buffer(void * buffer);
 
-GGML_BACKEND_API ggml_backend_reg_t ggml_backend_cuda_reg(void);
+GGML_BACKEND_API ggml_backend_reg_t GGML_BACKEND_REG(void);
 
 #ifdef  __cplusplus
 }
