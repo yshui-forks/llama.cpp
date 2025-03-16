@@ -63,13 +63,13 @@ using llama_grammar_candidates = std::vector<llama_grammar_candidate>;
 
 // TODO: remove, needed for tests atm
 const llama_grammar_rules  & llama_grammar_get_rules (const struct llama_grammar * grammar);
-      llama_grammar_stacks & llama_grammar_get_stacks(      struct llama_grammar * grammar);
+LLAMA_API      llama_grammar_stacks & llama_grammar_get_stacks(      struct llama_grammar * grammar);
 
 // takes a set of possible pushdown stacks on a grammar, which are required to
 // be positioned at a character range (see `llama_grammar_advance_stack`), and
 // produces the N possible stacks if the given char is accepted at those
 // positions
-void llama_grammar_accept(struct llama_grammar * grammar, uint32_t chr);
+LLAMA_API void llama_grammar_accept(struct llama_grammar * grammar, uint32_t chr);
 
 std::vector<llama_grammar_candidate> llama_grammar_reject_candidates_for_stack(
         const llama_grammar_rules      & rules,
@@ -139,13 +139,13 @@ struct llama_grammar {
 //
 
 // note: needed for tests (not great)
-struct llama_grammar * llama_grammar_init_impl(
+LLAMA_API struct llama_grammar * llama_grammar_init_impl(
         const struct llama_vocab * vocab,
         const llama_grammar_element ** rules,
         size_t n_rules,
         size_t start_rule_index);
 
-struct llama_grammar * llama_grammar_init_impl(
+LLAMA_API struct llama_grammar * llama_grammar_init_impl(
         const struct llama_vocab * vocab,
                       const char * grammar_str,
                       const char * grammar_root,
@@ -155,7 +155,7 @@ struct llama_grammar * llama_grammar_init_impl(
                const llama_token * trigger_tokens,
                             size_t num_trigger_tokens);
 
-void llama_grammar_free_impl(struct llama_grammar * grammar);
+LLAMA_API void llama_grammar_free_impl(struct llama_grammar * grammar);
 
 struct llama_grammar * llama_grammar_clone_impl(const struct llama_grammar & grammar);
 

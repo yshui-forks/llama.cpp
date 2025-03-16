@@ -53,7 +53,7 @@ else()
     add_subdirectory(tokenize)
     add_subdirectory(tts)
     add_subdirectory(gen-docs)
-    if (NOT GGML_BACKEND_DL)
+    if (FALSE)
         # these examples use the backends directly and cannot be built with dynamic loading
         add_subdirectory(convert-llama2c-to-ggml)
         add_subdirectory(cvector-generator)

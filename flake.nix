@@ -156,7 +156,7 @@
             # cf. https://zimbatm.com/notes/1000-instances-of-nixpkgs
             packages =
               {
-                default = config.legacyPackages.llamaPackages.llama-cpp;
+                default = config.legacyPackages.llamaPackagesCuda.llama-cpp.override { useRocm =true; };
                 vulkan = config.packages.default.override { useVulkan = true; };
                 windows = config.legacyPackages.llamaPackagesWindows.llama-cpp;
                 python-scripts = config.legacyPackages.llamaPackages.python-scripts;

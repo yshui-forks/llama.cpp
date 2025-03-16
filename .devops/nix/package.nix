@@ -94,6 +94,7 @@ let
     clr
     hipblas
     rocblas
+    rocwmma
   ];
 
   vulkanBuildInputs = [
@@ -168,6 +169,7 @@ effectiveStdenv.mkDerivation (finalAttrs: {
   cmakeFlags =
     [
       (cmakeBool "LLAMA_BUILD_SERVER" true)
+      (cmakeBool "LLAMA_BUILD_TESTS" false)
       (cmakeBool "BUILD_SHARED_LIBS" (!enableStatic))
       (cmakeBool "CMAKE_SKIP_BUILD_RPATH" true)
       (cmakeBool "LLAMA_CURL" enableCurl)
@@ -178,6 +180,7 @@ effectiveStdenv.mkDerivation (finalAttrs: {
       (cmakeBool "GGML_METAL" useMetalKit)
       (cmakeBool "GGML_VULKAN" useVulkan)
       (cmakeBool "GGML_STATIC" enableStatic)
+      (cmakeBool "GGML_CUDA_FA_ALL_QUANTS" true)
     ]
     ++ optionals useCuda [
       (

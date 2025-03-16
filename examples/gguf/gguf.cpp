@@ -157,6 +157,10 @@ static bool gguf_ex_read_1(const std::string & fname, bool check_data) {
 
     struct gguf_context * ctx = gguf_init_from_file(fname.c_str(), params);
 
+    if (ctx == nullptr) {
+        return false;
+    }
+
     printf("%s: version:      %d\n", __func__, gguf_get_version(ctx));
     printf("%s: alignment:   %zu\n", __func__, gguf_get_alignment(ctx));
     printf("%s: data offset: %zu\n", __func__, gguf_get_data_offset(ctx));

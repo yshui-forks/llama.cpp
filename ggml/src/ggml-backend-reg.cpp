@@ -30,11 +30,15 @@
 #endif
 
 #ifdef GGML_USE_CUDA
-extern "C" GGML_BACKEND_API ggml_backend_reg_t ggml_backend_cuda_reg(void);
+extern "C" {
+    GGML_BACKEND_API ggml_backend_reg_t ggml_backend_cuda_reg(void);
+}
 #endif
 
 #ifdef GGML_USE_HIP
-extern "C" GGML_BACKEND_API ggml_backend_reg_t ggml_backend_hip_reg(void);
+extern "C" {
+    GGML_BACKEND_API ggml_backend_reg_t ggml_backend_hip_reg(void);
+}
 #endif
 
 #ifdef GGML_USE_METAL

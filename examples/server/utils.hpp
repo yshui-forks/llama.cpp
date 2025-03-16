@@ -607,7 +607,6 @@ static json oaicompat_completion_params_parse(
     inputs.tool_choice           = common_chat_tool_choice_parse_oaicompat(json_value(body, "tool_choice", std::string("auto")));
     inputs.json_schema           = json_schema.is_null() ? "" : json_schema.dump();
     inputs.grammar               = grammar;
-    inputs.add_generation_prompt = json_value(body, "add_generation_prompt", true);
     inputs.use_jinja             = use_jinja;
     inputs.parallel_tool_calls   = json_value(body, "parallel_tool_calls", false);
     inputs.extract_reasoning     = reasoning_format != COMMON_REASONING_FORMAT_NONE;
@@ -621,10 +620,12 @@ static json oaicompat_completion_params_parse(
 
     llama_params["chat_format"]      = static_cast<int>(chat_params.format);
     llama_params["prompt"]           = chat_params.prompt;
-    if (!chat_params.grammar.empty()) {
+    if (body.contains("grammar") && !body.at("grammar").is_null()) {
+        llama_params["grammar"] = body.at("grammar");
+    } else if (!chat_params.grammar.empty()) {
         llama_params["grammar"] = chat_params.grammar;
     }
-    llama_params["grammar_lazy"]     = chat_params.grammar_lazy;
+    llama_params["grammar_lazy"]     = json_value(body, "grammar_lazy", chat_params.grammar_lazy);
     auto grammar_triggers = json::array();
     for (const auto & trigger : chat_params.grammar_triggers) {
         grammar_triggers.push_back(trigger.to_json<json>());
